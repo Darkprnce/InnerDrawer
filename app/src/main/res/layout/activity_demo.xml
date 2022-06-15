@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <com.innerdrawer.Ui.InnerDrawer
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:menuItemGravity="top"
+        app:menuItemTextSize="10sp"
+        app:menuItemTextColor="@color/white"
+        app:menuItemIconColor="@color/white"
+        app:closeDrawerOnMenuClick="true"
+        app:appBarEnabled="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:footerlayout="@layout/nav_footer_main"
+        app:statusBarDark="false"
+        app:shrinkValue="0.8"
+        app:appbarColor="@color/white"
+        app:appbarTitleTextColor="@color/black"
+        app:appbarTitleTextSize="10sp"
+        app:blurContent="true"
+        app:HamMenuIconTintColor="@color/black">
+
+        <include
+            android:id="@+id/ll_dashboard"
+            layout="@layout/app_bar_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.innerdrawer.Ui.InnerDrawer>
+</LinearLayout>
