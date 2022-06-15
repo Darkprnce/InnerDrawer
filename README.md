@@ -13,6 +13,7 @@
 ## Demo
 
 [<img src="screenshots/demo.gif" width=160>](screenshots/demo.gif)
+
 [<img src="screenshots/Screenshot_1.png" width=160>](screenshots/Screenshot_1.png)
 [<img src="screenshots/Screenshot_2.png" width=160>](screenshots/Screenshot_2.png)
 
