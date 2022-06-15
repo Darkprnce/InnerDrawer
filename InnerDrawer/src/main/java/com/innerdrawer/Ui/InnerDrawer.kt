@@ -61,7 +61,7 @@ class InnerDrawer : RelativeLayout {
     private var menuItemIconColor: Int = R.color.White
     private var navIconTintColor: Int = R.color.Black
 
-    //Todo Change Icon Size
+
     private var nav_iconSize = 30f
     private var appbarTitleTextSize = 20f
         set(appbarTitleTextSize) {

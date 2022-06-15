@@ -18,7 +18,7 @@
         app:appBarEnabled="true"
         app:headerLayout="@layout/nav_header_main"
         app:footerlayout="@layout/nav_footer_main"
-        app:statusBarDark="false"
+        app:statusBarDark="true"
         app:shrinkValue="0.8"
         app:appbarColor="@color/white"
         app:appbarTitleTextColor="@color/black"

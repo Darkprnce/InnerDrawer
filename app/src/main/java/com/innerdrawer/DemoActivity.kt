@@ -105,7 +105,7 @@ class DemoActivity : AppCompatActivity() {
 
 
         //set status bar icon color
-        dashboard_binding.navView.setstatusbarIconDark(false)
+        dashboard_binding.navView.setstatusbarIconDark(true)
 
         //set main content shrink value
         dashboard_binding.navView.setshrinkValue(0.8f)
