@@ -46,8 +46,6 @@ Inner Drawer is a highly customizable navigation drawer which is super easy to i
 	Add it in your root settings.gradle at the end of repositories:
 	```gradle
   repositories {
-        gradlePluginPortal()
-        google()
         mavenCentral()
     }
 	```
