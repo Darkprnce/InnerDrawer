@@ -53,7 +53,7 @@ Inner Drawer is a highly customizable navigation drawer which is super easy to i
 	Add the dependency in your app build.gradle
 	```gradle
   dependencies { 
-	        implementation 'io.github.Darkprnce:InnerDrawer:v1.0.0'
+	        implementation 'io.github.Darkprnce:InnerDrawer:1.0.0'
 	}
 	```
 
