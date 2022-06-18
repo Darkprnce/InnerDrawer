@@ -2,7 +2,7 @@
 <h2 align="center"><b>Inner Drawer</b></h2>
 <h4 align="center">Inner Drawer is a custom Navigation Drawer.</h4>
 <p align="center">
-<a alt="GitHub release"><img src="https://img.shields.io/badge/version-1.0.0-blue.svg" ></a>
+<a alt="GitHub release"><img src="https://img.shields.io/badge/version-1.0.1-blue.svg" ></a>
 <a href="/LICENSE" alt="License: GPLv3"><img src="https://img.shields.io/badge/License-MIT-orange.svg"></a>
 <a href="https://github.com/Darkprnce/InnerDrawer" alt="Build Status"><img src="https://img.shields.io/badge/build-passing-yellowgreen.svg"></a>
 </p>
@@ -53,7 +53,7 @@ Inner Drawer is a highly customizable navigation drawer which is super easy to i
 	Add the dependency in your app build.gradle
 	```gradle
   dependencies { 
-	        implementation 'io.github.Darkprnce:InnerDrawer:1.0.0'
+	        implementation 'io.github.Darkprnce:InnerDrawer:1.0.1'
 	}
 	```
 
