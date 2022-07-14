@@ -45,11 +45,12 @@ class InnerDrawer : RelativeLayout {
     protected var appbar_title: TextView? = null
     protected var nav_icon: ImageView? = null
     protected var drawer_ll: LinearLayout? = null
-    protected var background_ll: LinearLayout? = null
+    protected var background_ll: GifImageView? = null
     protected var menu_ll: LinearLayout? = null
     protected var containerLL: LinearLayout? = null
 
     protected var background_bitmaps: Bitmap? = null
+    protected var background_url: String? = null
     protected var activity: Activity? = null
 
     //Customization Variables
@@ -235,7 +236,12 @@ class InnerDrawer : RelativeLayout {
         }
 
         if (background_bitmaps != null) {
-            background_ll!!.background = BitmapDrawable(resources, background_bitmaps)
+            //background_ll!!.background = BitmapDrawable(resources, background_bitmaps)
+            Glide.with(mContext!!).load(background_bitmaps).into(background_ll!!)
+        }
+        if (background_url != null) {
+            //background_ll!!.background = BitmapDrawable(resources, background_bitmaps)
+            Glide.with(mContext!!).load(background_url).into(background_ll!!)
         }
 
         if (headersItem != null) {
@@ -250,6 +256,8 @@ class InnerDrawer : RelativeLayout {
         appbar_title!!.setTextColor(appbarTitleTextColor)
         nav_icon!!.setColorFilter(navIconTintColor)
         rootLayout!!.setBackgroundColor(navigationDrawerBackgroundColor)
+        main_ll!!.setCardBackgroundColor(navigationDrawerBackgroundColor)
+        containerLL!!.setBackgroundColor(navigationDrawerBackgroundColor)
 
         (menu_ll!!.layoutParams as FrameLayout.LayoutParams).gravity = menuItemGravity
 
@@ -688,6 +696,13 @@ class InnerDrawer : RelativeLayout {
      */
     fun setBackgroundItem(bitmap: Bitmap?) {
         this.background_bitmaps = bitmap
+    }
+
+    /**
+     *set background image of drawer layout
+     */
+    fun setBackgroundItem(url: String?) {
+        this.background_url = url
     }
 
     /**

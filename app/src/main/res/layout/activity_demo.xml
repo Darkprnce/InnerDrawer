@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="?attr/bgColor">
 
     <com.innerdrawer.Ui.InnerDrawer
         android:id="@+id/nav_view"
@@ -20,11 +20,12 @@
         app:footerlayout="@layout/nav_footer_main"
         app:statusBarDark="true"
         app:shrinkValue="0.8"
-        app:appbarColor="@color/white"
-        app:appbarTitleTextColor="@color/black"
+        app:appbarColor="?attr/bgColor"
+        app:appbarTitleTextColor="?attr/textColorBold"
         app:appbarTitleTextSize="10sp"
         app:blurContent="true"
-        app:HamMenuIconTintColor="@color/black">
+        app:navigationDrawerBackgroundColor="?attr/bgColor"
+        app:HamMenuIconTintColor="?attr/textColorBold">
 
         <include
             android:id="@+id/ll_dashboard"

@@ -6,9 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
-
-    <LinearLayout
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/background_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"/>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
@@ -19,8 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.85"
-            android:clipToPadding="false"
-            android:fillViewport="true"
             android:orientation="vertical">
             <ScrollView
                 android:layout_width="match_parent"
@@ -72,7 +73,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/_30sdp"
-                android:visibility="visible">
+                android:visibility="visible"
+                android:elevation="@dimen/_3sdp">
 
                 <ImageView
                     android:id="@+id/nav_icon"
@@ -99,8 +101,7 @@
                 android:id="@+id/containerLL"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/_20sdp">
+                android:orientation="vertical">
 
             </LinearLayout>
         </LinearLayout>

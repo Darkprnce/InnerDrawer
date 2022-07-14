@@ -45,22 +45,22 @@ class DemoActivity : AppCompatActivity() {
         dashboard_binding.navView.setAppBarEnabled(true)
 
         // set appbar color
-        dashboard_binding.navView.setNavIconColor(ContextCompat.getColor(mContext, R.color.black))
+       // dashboard_binding.navView.setNavIconColor(ContextCompat.getColor(mContext, R.color.black))
 
         //set appbar title
         dashboard_binding.navView.setAppbarTitle("Dragon Ball Z")
 
         // set appbar color
-        dashboard_binding.navView.setAppbarColor(ContextCompat.getColor(mContext, R.color.white))
+     //   dashboard_binding.navView.setAppbarColor(ContextCompat.getColor(mContext, R.color.white))
 
         //set appbar title color
-        dashboard_binding.navView.setAppbarTitleTextColor(
+      /*  dashboard_binding.navView.setAppbarTitleTextColor(
             ContextCompat.getColor(
                 mContext,
                 R.color.black
             )
         )
-
+*/
         //set appbar title font
         val font_a = Typeface.createFromAsset(mContext.assets, "ZenDots-Regular.ttf")
         dashboard_binding.navView.setAppbarTitleTypeface(font_a)

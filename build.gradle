@@ -1,4 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+
+    dependencies {
+
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.20.0' // NEW
+        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:1.4.10.2' // NEW
+    }
+}
+
 plugins {
     id 'com.android.application' version '7.2.0' apply false
     id 'com.android.library' version '7.2.0' apply false
