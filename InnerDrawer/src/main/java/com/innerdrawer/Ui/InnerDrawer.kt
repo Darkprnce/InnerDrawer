@@ -8,11 +8,11 @@ import android.content.res.TypedArray
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.annotation.IntDef
@@ -20,6 +20,8 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.innerdrawer.Helpers.OnSwipeTouchListener
 import com.innerdrawer.Model.NavMenuItem
 import com.innerdrawer.R
@@ -29,6 +31,8 @@ import java.lang.annotation.RetentionPolicy
 
 
 class InnerDrawer : RelativeLayout {
+    private var TAG = this.javaClass.simpleName
+
     //Context
     protected var mContext: Context? = null
     protected var mLayoutInflater: LayoutInflater? = null
@@ -51,6 +55,8 @@ class InnerDrawer : RelativeLayout {
 
     protected var background_bitmaps: Bitmap? = null
     protected var background_url: String? = null
+    protected var background_alpha: Float = 1f
+    protected var clear_cache: Boolean = false
     protected var activity: Activity? = null
 
     //Customization Variables
@@ -94,6 +100,8 @@ class InnerDrawer : RelativeLayout {
     private var centerX = 0f
     private var centerY = 0f
     private var shrink_value = 0.8f
+    private var header_present = false
+    private var footer_present = false
 
     @IntDef(STATE_OPEN, STATE_CLOSED, STATE_OPENING, STATE_CLOSING)
     @Retention(RetentionPolicy.SOURCE)
@@ -226,7 +234,7 @@ class InnerDrawer : RelativeLayout {
     }
 
     @SuppressLint("ResourceAsColor")
-    protected fun initMenu(activity: Activity) {
+    protected fun setAllViews(activity: Activity) {
         this.activity = activity
         transparentStatusBar(activity)
         if (isAppBar) {
@@ -237,17 +245,31 @@ class InnerDrawer : RelativeLayout {
 
         if (background_bitmaps != null) {
             //background_ll!!.background = BitmapDrawable(resources, background_bitmaps)
-            Glide.with(mContext!!).load(background_bitmaps).into(background_ll!!)
+            if (clear_cache) {
+                Glide.with(mContext!!).load(background_bitmaps)
+                    .apply(getrequestopt()).into(background_ll!!)
+            } else {
+                Glide.with(mContext!!).load(background_bitmaps).into(background_ll!!)
+            }
+            background_ll!!.alpha = background_alpha
         }
         if (background_url != null) {
             //background_ll!!.background = BitmapDrawable(resources, background_bitmaps)
-            Glide.with(mContext!!).load(background_url).into(background_ll!!)
+            if (clear_cache) {
+                Glide.with(mContext!!).load(background_url).apply(getrequestopt())
+                    .into(background_ll!!)
+            } else {
+                Glide.with(mContext!!).load(background_url).into(background_ll!!)
+            }
+            background_ll!!.alpha = background_alpha
         }
 
         if (headersItem != null) {
+            header_present = true
             if (isheaderInside) {
                 menu_ll!!.addView(headersItem)
             } else {
+                drawer_ll!!.removeView(headersItem)
                 drawer_ll!!.addView(headersItem, 0)
             }
         }
@@ -259,8 +281,24 @@ class InnerDrawer : RelativeLayout {
         main_ll!!.setCardBackgroundColor(navigationDrawerBackgroundColor)
         containerLL!!.setBackgroundColor(navigationDrawerBackgroundColor)
 
+        setmenuLayout()
+
+        if (footersItem != null) {
+            footer_present = true
+            if (isfooterInside) {
+                menu_ll!!.addView(footersItem)
+            } else {
+                drawer_ll!!.removeView(footersItem)
+                drawer_ll!!.addView(footersItem)
+            }
+        }
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private fun setmenuLayout() {
         (menu_ll!!.layoutParams as FrameLayout.LayoutParams).gravity = menuItemGravity
 
+        menu_ll!!.removeAllViews()
         for (i in menuItemsList!!.indices) {
             val view: View = LayoutInflater.from(context).inflate(R.layout.menu_item, null)
             val menu_title: TextView = view.findViewById(R.id.menu_title)
@@ -277,8 +315,17 @@ class InnerDrawer : RelativeLayout {
                     closeDrawer()
                 }
             }
-            Glide.with(mContext!!).load(menuItemsList!![i].imageId).into(menu_icon)
-            menu_icon.setColorFilter(menuItemIconColor)
+            if (menuItemsList!![i].drawableId != null) {
+                Glide.with(mContext!!).load(menuItemsList!![i].drawableId).into(menu_icon)
+                menu_icon.setColorFilter(menuItemIconColor)
+            } else if (menuItemsList!![i].iconUrl != null) {
+                if (menuItemsList!![i].iconCache) {
+                    Glide.with(mContext!!).load(menuItemsList!![i].iconUrl).apply(getrequestopt())
+                        .into(menu_icon)
+                } else {
+                    Glide.with(mContext!!).load(menuItemsList!![i].iconUrl).into(menu_icon)
+                }
+            }
 
             menu_title.setText(menuItemsList!![i].title)
             if (menuItemFont != null) {
@@ -287,14 +334,12 @@ class InnerDrawer : RelativeLayout {
 
             menu_ll!!.addView(view)
         }
+    }
 
-        if (footersItem != null) {
-            if (isfooterInside) {
-                menu_ll!!.addView(footersItem)
-            } else {
-                drawer_ll!!.addView(footersItem)
-            }
-        }
+    fun getrequestopt(): RequestOptions {
+        return RequestOptions()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
     }
 
     fun transparentStatusBar(activity: Activity) {
@@ -546,6 +591,7 @@ class InnerDrawer : RelativeLayout {
             headersItem = LayoutInflater.from(context).inflate(
                 header_lay, null
             )
+            header_present = true
         } else {
             headersItem = null
         }
@@ -555,6 +601,7 @@ class InnerDrawer : RelativeLayout {
             footersItem = LayoutInflater.from(context).inflate(
                 footer_lay, null
             )
+            footer_present = true
         } else {
             footersItem = null
         }
@@ -625,6 +672,7 @@ class InnerDrawer : RelativeLayout {
      */
     fun setMenuItemGravity(value: Int) {
         this.menuItemGravity = value
+        setmenuLayout()
     }
 
     /**
@@ -633,6 +681,25 @@ class InnerDrawer : RelativeLayout {
     fun addMenuItem(menuItem: NavMenuItem) {
         if (menuItemsList != null) {
             menuItemsList!!.add(menuItem)
+            setmenuLayout()
+        }
+    }
+
+    /**
+     *remove menu from drawer
+     */
+    fun removeMenuItem(pos: Int) {
+        if (menuItemsList != null) {
+            if (menuItemsList!!.size > 0) {
+                if (pos in menuItemsList!!.indices) {
+                    menuItemsList!!.removeAt(pos)
+                    setmenuLayout()
+                } else {
+                    Log.e(TAG, "removeMenuItem: No Item at that position")
+                }
+            } else {
+                Log.e(TAG, "removeMenuItem: No Items Present")
+            }
         }
     }
 
@@ -646,10 +713,27 @@ class InnerDrawer : RelativeLayout {
 
     /**
      *set the list of Menu Items
+     * NavMenuItem(title="Title of Menu Item",drawableId="res drawable",iconUrl="icon url",iconCache="clear cache for icon url with same path but different images")
+     * in NavMenuItem set either drawable or icon url
      */
-    fun setMenuItemList(activity: Activity, menuItemList: ArrayList<NavMenuItem>?) {
+    fun setMenuItemList(menuItemList: ArrayList<NavMenuItem>?) {
         this.menuItemsList = menuItemList
-        initMenu(activity)
+        setmenuLayout()
+    }
+
+    /**
+     *remove all Menu Items
+     */
+    fun removeAllMenuItem() {
+        this.menuItemsList = ArrayList()
+        setmenuLayout()
+    }
+
+    /**
+     *Call this after setting all views
+     */
+    fun setupNavigationDrawer(activity: Activity) {
+        setAllViews(activity)
     }
 
     /**
@@ -664,7 +748,39 @@ class InnerDrawer : RelativeLayout {
      *set Header View
      */
     fun setHeaderView(view: View?) {
-        this.headersItem = view
+        if (!header_present) {
+            header_present = true
+            this.headersItem = view
+            if (headersItem != null) {
+                if (isheaderInside) {
+                    menu_ll!!.addView(headersItem, 0)
+                } else {
+                    drawer_ll!!.addView(headersItem, 0)
+                }
+            }
+        } else {
+            Log.e(TAG, "setHeaderView: Header already present")
+        }
+    }
+
+    /**
+     *remove Header View
+     */
+    fun removeHeaderView() {
+        if (header_present) {
+            if (headersItem != null) {
+                if (isheaderInside) {
+                    menu_ll!!.removeView(headersItem)
+                } else {
+                    drawer_ll!!.removeView(headersItem)
+                }
+                header_present = false
+            } else {
+                Log.e(TAG, "removeHeaderView: Header view not present")
+            }
+        } else {
+            Log.e(TAG, "removeHeaderView: No Header Present")
+        }
     }
 
     /**
@@ -679,30 +795,93 @@ class InnerDrawer : RelativeLayout {
      *set Footer View
      */
     fun setFooterView(view: View?) {
-        this.footersItem = view
+        if (!footer_present) {
+            footer_present = true
+            this.footersItem = view
+            if (footersItem != null) {
+                if (isfooterInside) {
+                    menu_ll!!.addView(footersItem, menu_ll!!.childCount)
+                } else {
+                    drawer_ll!!.addView(footersItem, drawer_ll!!.childCount)
+                }
+            }
+        } else {
+            Log.e(TAG, "setFooterView: Footer already present")
+        }
     }
 
     /**
-     *get background image bitmap of drawer layout
+     *remove Footer View
+     */
+    fun removeFooterView() {
+        if (footer_present) {
+            if (footersItem != null) {
+                if (isfooterInside) {
+                    menu_ll!!.removeView(footersItem)
+                } else {
+                    drawer_ll!!.removeView(footersItem)
+                }
+                footer_present = false
+            } else {
+                Log.e(TAG, "removeFooterView: Footer view not present")
+            }
+        } else {
+            Log.e(TAG, "removeFooterView: No Footer present")
+        }
+    }
+
+    /**
+     *get background image bitmap or image url of drawer layout, null if none is set
      * @return bitmap
      */
-    fun getBackgroundItem(): Bitmap? {
-        return background_bitmaps
+    fun getBackgroundItem(): Any? {
+        if (background_bitmaps != null) {
+            return background_bitmaps
+        }else   if (background_url != null) {
+            return background_url
+        }else{
+            return null
+        }
     }
 
 
     /**
      *set background image of drawer layout
+     * alpha value between 0F and 1F
      */
-    fun setBackgroundItem(bitmap: Bitmap?) {
+    fun setBackgroundItem(bitmap: Bitmap?, alpha: Float = 1f) {
         this.background_bitmaps = bitmap
+        this.background_alpha = alpha
+
+        if (background_bitmaps != null) {
+            if (clear_cache) {
+                Glide.with(mContext!!).load(background_bitmaps)
+                    .apply(getrequestopt()).into(background_ll!!)
+            } else {
+                Glide.with(mContext!!).load(background_bitmaps).into(background_ll!!)
+            }
+            background_ll!!.alpha = this.background_alpha
+        }
     }
 
     /**
      *set background image of drawer layout
+     * alpha value between 0F and 1F
+     * clear_cache for image url with same path but different images
      */
-    fun setBackgroundItem(url: String?) {
+    fun setBackgroundItem(url: String?, alpha: Float = 1f, clear_cache: Boolean = false) {
         this.background_url = url
+        this.background_alpha = alpha
+
+        if (background_url != null) {
+            if (clear_cache) {
+                Glide.with(mContext!!).load(background_url).apply(getrequestopt())
+                    .into(background_ll!!)
+            } else {
+                Glide.with(mContext!!).load(background_url).into(background_ll!!)
+            }
+            background_ll!!.alpha = this.background_alpha
+        }
     }
 
     /**
@@ -753,6 +932,7 @@ class InnerDrawer : RelativeLayout {
      */
     fun setmenuItemFont(font: Typeface?) {
         this.menuItemFont = font
+        setmenuLayout()
     }
 
     /**
@@ -834,7 +1014,7 @@ class InnerDrawer : RelativeLayout {
      */
     fun setMenuItemTextColor(menuItemTextColor: Int) {
         this.menuItemTextColor = menuItemTextColor
-        invalidate()
+        setmenuLayout()
     }
 
     /**
@@ -850,7 +1030,7 @@ class InnerDrawer : RelativeLayout {
      */
     fun setmenuItemTextSize(menuItemTextSize: Float) {
         this.menuItemTextSize = menuItemTextSize
-        invalidate()
+        setmenuLayout()
     }
 
     /**
@@ -859,6 +1039,23 @@ class InnerDrawer : RelativeLayout {
      */
     fun getMenuItemTextSize(): Float {
         return menuItemTextSize
+    }
+
+
+    /**
+     *set menu item icon color
+     */
+    fun setMenuItemIconColor(menuItemIconColor: Int) {
+        this.menuItemIconColor = menuItemIconColor
+        setmenuLayout()
+    }
+
+    /**
+     *get menu item icon color
+     * @return Int
+     */
+    fun getMenuItemIconColor(): Int {
+        return menuItemIconColor
     }
 
     /**

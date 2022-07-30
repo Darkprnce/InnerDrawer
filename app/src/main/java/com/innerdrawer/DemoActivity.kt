@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.innerdrawer.Model.NavMenuItem
 import com.innerdrawer.Ui.InnerDrawer
@@ -45,22 +46,22 @@ class DemoActivity : AppCompatActivity() {
         dashboard_binding.navView.setAppBarEnabled(true)
 
         // set appbar color
-       // dashboard_binding.navView.setNavIconColor(ContextCompat.getColor(mContext, R.color.black))
+        // dashboard_binding.navView.setNavIconColor(ContextCompat.getColor(mContext, R.color.black))
 
         //set appbar title
-        dashboard_binding.navView.setAppbarTitle("Dragon Ball Z")
+        dashboard_binding.navView.setAppbarTitle("Inner Drawer")
 
         // set appbar color
-     //   dashboard_binding.navView.setAppbarColor(ContextCompat.getColor(mContext, R.color.white))
+        //   dashboard_binding.navView.setAppbarColor(ContextCompat.getColor(mContext, R.color.white))
 
         //set appbar title color
-      /*  dashboard_binding.navView.setAppbarTitleTextColor(
-            ContextCompat.getColor(
-                mContext,
-                R.color.black
-            )
-        )
-*/
+        /*  dashboard_binding.navView.setAppbarTitleTextColor(
+              ContextCompat.getColor(
+                  mContext,
+                  R.color.black
+              )
+          )
+  */
         //set appbar title font
         val font_a = Typeface.createFromAsset(mContext.assets, "ZenDots-Regular.ttf")
         dashboard_binding.navView.setAppbarTitleTypeface(font_a)
@@ -131,12 +132,12 @@ class DemoActivity : AppCompatActivity() {
         menuItems.add(NavMenuItem("Settings", R.drawable.settings_icon))
         menuItems.add(NavMenuItem("Share", R.drawable.share_icon_small))
 
+        //set menu Items
+        dashboard_binding.navView.setMenuItemList(menuItems)
 
-        // set menu at last
-        dashboard_binding.navView.setMenuItemList(this, menuItems)
+        // initializing Navigation Drawer
+        dashboard_binding.navView.setupNavigationDrawer(this)
 
-        //add menu item dynamically
-        //dashboard_binding.navView.addMenuItem(NavMenuItem("Test",R.drawable.home_icon))
 
         //access different menu from title
         dashboard_binding.navView.setOnMenuItemClickListener(object :
@@ -184,5 +185,92 @@ class DemoActivity : AppCompatActivity() {
             }
         })
 
+
+        // adding menu dynamically
+        var count = 1
+        binding.addMenu.setOnClickListener {
+            count = count + 1
+            dashboard_binding.navView.addMenuItem(NavMenuItem("New Menu $count",R.drawable.home_icon))
+            Toast.makeText(mContext!!,"Menu added", Toast.LENGTH_SHORT).show()
+        }
+
+        // removing menu dynamically
+        binding.removeMenu.setOnClickListener {
+            dashboard_binding.navView.removeMenuItem(dashboard_binding.navView.getMenuItemList()!!.size-1)
+            Toast.makeText(mContext!!,"Menu removed", Toast.LENGTH_SHORT).show()
+        }
+
+        //setting new menu
+        binding.setMenu.setOnClickListener {
+            val menuItems: ArrayList<NavMenuItem> = ArrayList()
+            menuItems.add(NavMenuItem("Goku", R.drawable.settings_icon))
+            menuItems.add(NavMenuItem("Vegeta", R.drawable.share_icon))
+            menuItems.add(NavMenuItem("Gohan", iconUrl = "https://cdn-icons-png.flaticon.com/512/25/25694.png"))
+
+            dashboard_binding.navView.setMenuItemList(menuItems)
+            Toast.makeText(mContext!!,"New Menu Set", Toast.LENGTH_SHORT).show()
+        }
+
+        //removing all menu items
+        binding.removeAllMenu.setOnClickListener {
+            dashboard_binding.navView.removeAllMenuItem()
+            Toast.makeText(mContext!!,"All Menu Removed", Toast.LENGTH_SHORT).show()
+        }
+
+        //adding header view
+        binding.addHeader.setOnClickListener {
+            val headerview: View = LayoutInflater.from(mContext).inflate(R.layout.nav_header_main, null)
+            dashboard_binding.navView.setHeaderView(headerview)
+            Toast.makeText(mContext!!,"Header added", Toast.LENGTH_SHORT).show()
+        }
+
+        //remove header view
+        binding.removeHeader.setOnClickListener {
+            dashboard_binding.navView.removeHeaderView()
+            Toast.makeText(mContext!!,"Header removed", Toast.LENGTH_SHORT).show()
+        }
+
+        //adding Footer view
+        binding.addFooter.setOnClickListener {
+            //set footer view
+            val footerview: View = LayoutInflater.from(mContext).inflate(R.layout.nav_footer_main, null)
+            dashboard_binding.navView.setFooterView(footerview)
+            Toast.makeText(mContext!!,"Footer added", Toast.LENGTH_SHORT).show()
+        }
+
+        //remove Footer view
+        binding.removeFooter.setOnClickListener {
+            dashboard_binding.navView.removeFooterView()
+            Toast.makeText(mContext!!,"Footer removed", Toast.LENGTH_SHORT).show()
+        }
+
+        //changing menu Item text size
+        binding.changeMenuTextSize.setOnClickListener {
+            dashboard_binding.navView.setmenuItemTextSize(10f)
+            Toast.makeText(mContext!!,"Menu Item Text size changed", Toast.LENGTH_SHORT).show()
+        }
+
+        //changing menu Item Icon color
+        binding.changeMenuTextColor.setOnClickListener {
+            dashboard_binding.navView.setMenuItemTextColor(
+                ContextCompat.getColor(
+                    mContext,
+                    R.color.black
+                )
+            )
+            Toast.makeText(mContext!!,"Menu Item Text color changed", Toast.LENGTH_SHORT).show()
+        }
+
+        //changing menu Item Icon color
+        binding.changeMenuIconColor.setOnClickListener {
+            dashboard_binding.navView.setMenuItemIconColor(
+                ContextCompat.getColor(
+                    mContext,
+                    R.color.black
+                )
+            )
+            Toast.makeText(mContext!!,"Menu Item Icon color changed", Toast.LENGTH_SHORT).show()
+        }
     }
+
 }

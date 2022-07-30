@@ -12,12 +12,147 @@
      <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="㊙ Super Saiyan is coming 🐲 "
+        android:text="Customization"
         android:textColor="#FF5722"
         android:textStyle="bold"
         android:textSize="25sp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+         android:layout_marginTop="50dp"/>
 
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+          android:orientation="vertical"
+         android:padding="10dp"
+         android:gravity="center_horizontal"
+         android:layout_marginTop="10dp">
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+               android:orientation="horizontal"
+              android:gravity="center">
+               <Button
+                   android:id="@+id/add_menu"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Add Menu"
+                   android:textStyle="bold"
+                   android:textAllCaps="false"/>
+               <Space
+                   android:layout_width="10dp"
+                   android:layout_height="match_parent"/>
+               <Button
+                   android:id="@+id/remove_menu"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Remove Menu"
+                   android:textStyle="bold"
+                   android:textAllCaps="false"/>
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:gravity="center"
+              android:layout_marginTop="10dp">
+               <Button
+                   android:id="@+id/set_menu"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Set New menu"
+                   android:textStyle="bold"
+                   android:textAllCaps="false"/>
+               <Space
+                   android:layout_width="10dp"
+                   android:layout_height="match_parent"/>
+               <Button
+                   android:id="@+id/remove_all_menu"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Remove All menu"
+                   android:textStyle="bold"
+                   android:textAllCaps="false"/>
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:gravity="center"
+              android:layout_marginTop="10dp">
+               <Button
+                   android:id="@+id/add_header"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Add Header"
+                   android:textStyle="bold"
+                   android:textAllCaps="false"/>
+               <Space
+                   android:layout_width="10dp"
+                   android:layout_height="match_parent"/>
+               <Button
+                   android:id="@+id/remove_header"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Remove Header"
+                   android:textStyle="bold"
+                   android:textAllCaps="false"/>
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:gravity="center"
+              android:layout_marginTop="10dp">
+               <Button
+                   android:id="@+id/add_footer"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Add Footer"
+                   android:textStyle="bold"
+                   android:textAllCaps="false"/>
+               <Space
+                   android:layout_width="10dp"
+                   android:layout_height="match_parent"/>
+               <Button
+                   android:id="@+id/remove_footer"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Remove Footer"
+                   android:textStyle="bold"
+                   android:textAllCaps="false"/>
+
+          </LinearLayout>
+
+          <Button
+              android:id="@+id/change_menu_text_size"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Change Menu Item Text Size"
+              android:textStyle="bold"
+              android:textAllCaps="false"/>
+          <Button
+              android:id="@+id/change_menu_text_color"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Change menu text color"
+              android:textStyle="bold"
+              android:textAllCaps="false"/>
+          <Button
+              android:id="@+id/change_menu_icon_color"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Change menu Icon color"
+              android:textStyle="bold"
+              android:textAllCaps="false"/>
+
+     </LinearLayout>
 </LinearLayout>
 
 
