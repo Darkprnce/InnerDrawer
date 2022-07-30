@@ -2,7 +2,7 @@
 <h2 align="center"><b>Inner Drawer</b></h2>
 <h4 align="center">Inner Drawer is a custom Navigation Drawer.</h4>
 <p align="center">
-<a alt="GitHub release"><img src="https://img.shields.io/badge/version-1.0.2-blue.svg" ></a>
+<a alt="GitHub release"><img src="https://img.shields.io/badge/version-1.0.3-blue.svg" ></a>
 <a href="/LICENSE" alt="License: GPLv3"><img src="https://img.shields.io/badge/License-MIT-orange.svg"></a>
 <a href="https://github.com/Darkprnce/InnerDrawer" alt="Build Status"><img src="https://img.shields.io/badge/build-passing-yellowgreen.svg"></a>
 </p>
@@ -53,7 +53,7 @@ Inner Drawer is a highly customizable navigation drawer which is super easy to i
 	Add the dependency in your app build.gradle
 	```gradle
   dependencies { 
-	        implementation 'io.github.Darkprnce:InnerDrawer:1.0.2'
+	        implementation 'io.github.Darkprnce:InnerDrawer:1.0.3'
 	}
 	```
 
@@ -74,12 +74,17 @@ Drop the Inner Drawer in your XML layout as is shown below:
     </com.innerdrawer.Ui.InnerDrawer>
 ```
 And then in your Activity
+
+1. viewBinding Initialize
 ```kotlin
         //Global Declaration
         private lateinit var dashboard_binding: ActivityDemoBinding
         private lateinit var header_binding: NavHeaderMainBinding
         private lateinit var mContext: Context
-        
+```	
+
+2. viewBinding declared
+```kotlin
         //Inside onCreate()
         
         dashboard_binding = ActivityDemoBinding.inflate(layoutInflater)
@@ -87,125 +92,180 @@ And then in your Activity
         val view = dashboard_binding.root
         setContentView(view)
         mContext = this@DemoActivity
-        
-        //setting menu
-        
-        //set blur on main content when drawer is open
+```       
+
+3. Do all the customization
+
+set blur on main content when drawer is open
+```kotlin	
         dashboard_binding.navView.setBlurContentEnabled(true)
+```     
 
-        //set default appbar
+set default appbar
+```kotlin
         dashboard_binding.navView.setAppBarEnabled(true)
+```    
 
-        // set appbar color
+set NavIcon color
+```kotlin
         dashboard_binding.navView.setNavIconColor(ContextCompat.getColor(mContext, R.color.black))
-
-        //set appbar title
+```    
+       
+set appbar title
+```kotlin
         dashboard_binding.navView.setAppbarTitle("Dragon Ball Z")
+```    
 
-        // set appbar color
+set appbar color
+```kotlin
         dashboard_binding.navView.setAppbarColor(ContextCompat.getColor(mContext, R.color.white))
-
-        //set appbar title color
+```    
+      
+set appbar title color
+```kotlin
         dashboard_binding.navView.setAppbarTitleTextColor(
             ContextCompat.getColor(
                 mContext,
                 R.color.black
             )
         )
+```   
 
-        //set appbar title font
+set appbar title font
+```kotlin
         val font_a = Typeface.createFromAsset(mContext.assets, "ZenDots-Regular.ttf")
         dashboard_binding.navView.setAppbarTitleTypeface(font_a)
-
-        //if you want to close drawer on menu item click
+```   
+       
+if you want to close drawer on menu item click
+```kotlin
         dashboard_binding.navView.setCloseDrawerOnMenuClick(true)
+```   
 
-        //set footer view
+4. Set Header and Footer View
+set footer view
+```kotlin
         val footerview: View = LayoutInflater.from(mContext).inflate(R.layout.nav_footer_main, null)
         dashboard_binding.navView.setFooterView(footerview)
+```   
 
-        //set header view
+set header view
+```kotlin
         val headerview: View = LayoutInflater.from(mContext).inflate(R.layout.nav_header_main, null)
         dashboard_binding.navView.setHeaderView(headerview)
+```   
+       
+set footer inside menu list
+```kotlin
+       dashboard_binding.navView.setFooterInside(false)
+```   
+       
+set header inside menu list
+```kotlin
+       dashboard_binding.navView.setHeaderInside(false)
+```   
+  
+5. set drawer background color and image
+you can set drawable or image url as background and a clear cache option is also there for image url with same path
 
-        //set footer inside menu list
-        dashboard_binding.navView.setFooterInside(false)
+set drawer background color
+```kotlin
+       dashboard_binding.navView.setNavigationDrawerBackgroundColor(R.color.white)
+``` 
 
-        //set header inside menu list
-        dashboard_binding.navView.setHeaderInside(false)
-
-        //set drawer background color
-        dashboard_binding.navView.setNavigationDrawerBackgroundColor(R.color.white)
-
-        //set menu item text color
-        dashboard_binding.navView.setMenuItemTextColor(
-            ContextCompat.getColor(
-                mContext,
-                R.color.white
-            )
-        )
-
-        //set menu item text size
-        dashboard_binding.navView.setmenuItemTextSize(20f)
-
-        //set menu item gravity
-        dashboard_binding.navView.setMenuItemGravity(Gravity.TOP)
-
-        // set font for menu items
-        val font = Typeface.createFromAsset(mContext!!.assets, "ZenDots-Regular.ttf")
-        dashboard_binding.navView.setmenuItemFont(font)
-
-
-        //set status bar icon color
-        dashboard_binding.navView.setstatusbarIconDark(true)
-
-        //set main content shrink value
-        dashboard_binding.navView.setshrinkValue(0.8f)
-
-        // open drawer
-        dashboard_binding.navView.openDrawer()
-
-        //close drawer
-        dashboard_binding.navView.closeDrawer()
-
-        //set background image to drawer
-        dashboard_binding.navView.setBackgroundItem(
+set background image to drawer
+```kotlin
+       dashboard_binding.navView.setBackgroundItem(
             BitmapFactory.decodeResource(
                 resources,
                 R.drawable.nav_bg
             )
         )
+``` 
+       
+6. set menu items
 
+set menu item text color
+```kotlin
+       dashboard_binding.navView.setMenuItemTextColor(
+            ContextCompat.getColor(
+                mContext,
+                R.color.white
+            )
+        )
+``` 
+       
+set menu item text size
+```kotlin
+       dashboard_binding.navView.setmenuItemTextSize(20f)
+``` 
 
-        //create menu list
+set menu item gravity
+```kotlin
+        dashboard_binding.navView.setMenuItemGravity(Gravity.TOP)
+```
+
+set font for menu items
+```kotlin
+         val font = Typeface.createFromAsset(mContext!!.assets, "ZenDots-Regular.ttf")
+        dashboard_binding.navView.setmenuItemFont(font)
+```
+
+create menu list
+```kotlin
         val menuItems: ArrayList<NavMenuItem> = ArrayList()
         menuItems.add(NavMenuItem("Home", R.drawable.home_icon))
         menuItems.add(NavMenuItem("Settings", R.drawable.settings_icon))
         menuItems.add(NavMenuItem("Share", R.drawable.share_icon_small))
+	dashboard_binding.navView.setMenuItemList(this, menuItems)
+```
 
+add menu item dynamically
+```kotlin
+       dashboard_binding.navView.addMenuItem(NavMenuItem("Test",R.drawable.home_icon))
+```
 
-        // set menu at last
-        dashboard_binding.navView.setMenuItemList(this, menuItems)
+7. set status bar icon color (Dark or Light)
+         
+set status bar icon color
+```kotlin
+        dashboard_binding.navView.setstatusbarIconDark(true)
+```
 
-        //add menu item dynamically
-        dashboard_binding.navView.addMenuItem(NavMenuItem("Test",R.drawable.home_icon))
+8.set main content shrink value
+```kotlin
+        dashboard_binding.navView.setshrinkValue(0.8f)
+```
 
-        //access different menu from title
-        dashboard_binding.navView.setOnMenuItemClickListener(object :
+9.open drawer
+```kotlin
+        dashboard_binding.navView.openDrawer()
+```
+        
+10.close drawer
+```kotlin
+        dashboard_binding.navView.closeDrawer()
+```
+             
+
+11.Finally setup navigation drawer  (**Important Step)
+```kotlin
+      dashboard_binding.navView.setupNavigationDrawer(this)
+```    
+
+12.Listener for menu item click
+```kotlin
+       dashboard_binding.navView.setOnMenuItemClickListener(object :
             InnerDrawer.OnMenuItemClickListener {
             override fun onMenuItemClicked(title: String) {
                 dashboard_binding.navView.setAppbarTitle(title)
                 Log.e(TAG, "onMenuItemClicked: " + title)
             }
         })
-
-
-        //get header view
-        header_binding = NavHeaderMainBinding.bind(dashboard_binding.navView.getHeaderView()!!)
-        header_binding.txtuserName.text = "Kakarot"
-        header_binding.txtuserId.text = "Son Goku"
-
-        //drawer listener
+```     
+        
+13.drawer listener
+```kotlin
         dashboard_binding.navView.setOnDrawerListener(object : InnerDrawer.DrawerListener {
             override fun onDrawerOpening() {
                 Log.d(TAG, "onDrawerOpening: ")
@@ -227,16 +287,25 @@ And then in your Activity
                 Log.d(TAG, "onDrawerStateChanged: ")
             }
         })
+```   
 
-        //Nav Icon listener
+14.Nav Icon listener
+```kotlin
         dashboard_binding.navView.setOnNavIconClickListener(object :
             InnerDrawer.OnNavIconClickListener {
             override fun onNavIconClicked() {
                 Log.d(TAG, "onHamMenuClicked: ")
             }
         })
+``` 
 
-```
+
+get header view
+```kotlin
+        header_binding = NavHeaderMainBinding.bind(dashboard_binding.navView.getHeaderView()!!)
+        header_binding.txtuserName.text = "Kakarot"
+        header_binding.txtuserId.text = "Son Goku"
+``` 
 
 ### Customization
 
