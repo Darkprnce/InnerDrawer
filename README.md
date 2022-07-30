@@ -143,6 +143,7 @@ if you want to close drawer on menu item click
 ```   
 
 4. Set Header and Footer View
+
 set footer view
 ```kotlin
         val footerview: View = LayoutInflater.from(mContext).inflate(R.layout.nav_footer_main, null)
@@ -166,6 +167,7 @@ set header inside menu list
 ```   
   
 5. set drawer background color and image
+
 you can set drawable or image url as background and a clear cache option is also there for image url with same path
 
 set drawer background color
@@ -248,7 +250,7 @@ set status bar icon color
 ```
              
 
-11.Finally setup navigation drawer  (**Important Step)
+11.Finally setup navigation drawer  <h1 style="background-color:powderblue;">(**Important Step)</h1>
 ```kotlin
       dashboard_binding.navView.setupNavigationDrawer(this)
 ```    
@@ -307,6 +309,7 @@ get header view
         header_binding.txtuserId.text = "Son Goku"
 ``` 
 
+###Or you can directly customize it in xml
 ### Customization
 
 
