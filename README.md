@@ -250,6 +250,7 @@ set status bar icon color
 ```
              
 <h1 style="color:red;">(**Important Step)</h1>
+
 11.Finally setup navigation drawer  
 ```kotlin
       dashboard_binding.navView.setupNavigationDrawer(this)
